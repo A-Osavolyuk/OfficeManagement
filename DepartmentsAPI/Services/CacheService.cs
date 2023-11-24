@@ -11,7 +11,7 @@ namespace DepartmentsAPI.Services
 
         public CacheService(IConfiguration configuration)
         {
-            var redis = ConnectionMultiplexer.Connect(configuration.GetSection("Redis").ToString());
+            var redis = ConnectionMultiplexer.Connect("localhost:6379");
             database = redis.GetDatabase();
 
             this.configuration = configuration;

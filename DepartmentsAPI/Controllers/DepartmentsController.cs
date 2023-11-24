@@ -53,12 +53,12 @@ namespace DepartmentsAPI.Controllers
             var result = await departmentsService.DeleteById(id);
 
             return result.Match<ActionResult<ResponseDto>>(
-                succ => Ok(new ResponseDto() { IsSucceeded = true, Message = "Department with id: {id} was deleted successful." }),
+                succ => Ok(new ResponseDto() { IsSucceeded = true, Message = $"Department with id: {id} was deleted successful." }),
                 fail => NotFound(fail.Message));
         }
 
         [HttpPut("{id:int}")]
-        public async ValueTask<ActionResult<ResponseDto>> CreateDepartmnet([FromBody] DepartmentDto department, int id)
+        public async ValueTask<ActionResult<ResponseDto>> CreateDepartment([FromBody] DepartmentDto department, int id)
         {
             var result = await departmentsService.Update(department, id);
 

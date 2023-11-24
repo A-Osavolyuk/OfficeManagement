@@ -125,8 +125,7 @@ namespace DepartmentsAPI.Services
                     return new Result<Department>(new ValidationException(validationResult.Errors.First().ErrorMessage));
                 }
 
-                department = mapper.Map<Department>(departmentDto);
-                department.DepartmentId = id;
+                department.DepartmentName = departmentDto.DepartmentName;
 
                 context.Departments.Update(department);
                 await context.SaveChangesAsync();
