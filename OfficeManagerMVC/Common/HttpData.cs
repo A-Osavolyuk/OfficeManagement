@@ -2,6 +2,6 @@
 {
     public class HttpData
     {
-        public string DepartmentsAPI { get; set; } = string.Empty;
+        public string DepartmentsAPI { get; set; }
     }
 }

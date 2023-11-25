@@ -1,4 +1,5 @@
-﻿using OfficeManagerMVC.Common;
+﻿using Microsoft.Extensions.Options;
+using OfficeManagerMVC.Common;
 using OfficeManagerMVC.Models.DTOs;
 using OfficeManagerMVC.Models.Enums;
 using OfficeManagerMVC.Services.Interfaces;
@@ -12,10 +13,10 @@ namespace OfficeManagerMVC.Services
         private readonly IBaseHttpService httpService;
         private readonly HttpData httpData;
 
-        public DepartmentHttpService(IBaseHttpService httpService, HttpData httpData)
+        public DepartmentHttpService(IBaseHttpService httpService, IOptions<HttpData> httpData)
         {
             this.httpService = httpService;
-            this.httpData = httpData;
+            this.httpData = httpData.Value;
         }
 
         public async ValueTask<ResponseDto> Create(DepartmentDto department)

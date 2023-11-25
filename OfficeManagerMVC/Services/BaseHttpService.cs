@@ -13,7 +13,7 @@ namespace OfficeManagerMVC.Services
 
         public BaseHttpService(IHttpClientFactory clientFactory)
         {
-            httpClient = clientFactory.CreateClient("OfficeManagerAPI");
+            httpClient = clientFactory.CreateClient("OfficeManagerClient");
         }
 
         public async Task<ResponseDto?> SendAsync(RequestDto request)

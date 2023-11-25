@@ -1,0 +1,49 @@
+﻿@model IEnumerable<OfficeManagerMVC.Models.Entities.Department>
+
+@{
+    ViewData["Title"] = "DepartmentsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>DepartmentsList</h1>
+
+<p>
+    <a asp-controller="Departments" asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Department ID
+            </th>
+            <th>
+                Department Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.DepartmentId)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                    </div>
+                </td>
+                <td>
+                    <div class="text-end">
+                        <a class="btn btn-info w-25" asp-action="details" asp-controller="departments">Details</a>
+                        <a class="btn btn-primary w-25" asp-action="edit" asp-controller="departments">Edit</a>
+                        <a class="btn btn-danger w-25" asp-action="delete" asp-controller="departments">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
