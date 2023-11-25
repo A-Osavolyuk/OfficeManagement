@@ -1,7 +1,22 @@
+using FluentValidation.AspNetCore;
+using OfficeManagerMVC.Common;
+using OfficeManagerMVC.Services;
+using OfficeManagerMVC.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation();
+
+builder.Services.Configure<HttpData>(builder.Configuration.GetSection("HttpData"));
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<IDepartmentHttpService, DepartmentHttpService>();
+
+builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
+builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
 
 var app = builder.Build();
 
