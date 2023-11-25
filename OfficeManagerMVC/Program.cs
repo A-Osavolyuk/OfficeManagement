@@ -1,7 +1,10 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using OfficeManagerMVC.Common;
+using OfficeManagerMVC.Models.DTOs;
 using OfficeManagerMVC.Services;
 using OfficeManagerMVC.Services.Interfaces;
+using OfficeManagerMVC.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +18,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IDepartmentHttpService, DepartmentHttpService>();
 
+builder.Services.AddScoped<IValidator<DepartmentDto>, DepartmentValidator>();
 builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
 builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

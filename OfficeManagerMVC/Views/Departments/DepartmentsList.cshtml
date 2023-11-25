@@ -38,9 +38,9 @@
                 </td>
                 <td>
                     <div class="text-end">
-                        <a class="btn btn-info w-25" asp-action="details" asp-controller="departments">Details</a>
-                        <a class="btn btn-primary w-25" asp-action="edit" asp-controller="departments">Edit</a>
-                        <a class="btn btn-danger w-25" asp-action="delete" asp-controller="departments">Delete</a>
+                        <a class="btn btn-info w-25" asp-action="details" asp-controller="departments" asp-route-id="@item.DepartmentId">Details</a>
+                        <a class="btn btn-primary w-25" asp-action="update" asp-controller="departments" asp-route-id="@item.DepartmentId">Edit</a>
+                        <a class="btn btn-danger w-25" asp-action="delete" asp-controller="departments" asp-route-id="@item.DepartmentId">Delete</a>
                     </div>
                 </td>
             </tr>

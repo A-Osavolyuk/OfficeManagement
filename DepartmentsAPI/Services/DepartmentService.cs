@@ -5,6 +5,7 @@ using DepartmentsAPI.Models.Entities;
 using DepartmentsAPI.Services.Interfaces;
 using FluentValidation;
 using LanguageExt.Common;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DepartmentsAPI.Services
