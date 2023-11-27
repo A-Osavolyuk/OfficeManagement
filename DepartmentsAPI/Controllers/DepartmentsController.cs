@@ -11,10 +11,12 @@ namespace DepartmentsAPI.Controllers
     public class DepartmentsController : ControllerBase
     {
         private readonly IDepartmentsService departmentsService;
+        private readonly ILogger<DepartmentsController> logger;
 
-        public DepartmentsController(IDepartmentsService departmentsService)
+        public DepartmentsController(IDepartmentsService departmentsService, ILogger<DepartmentsController> logger)
         {
             this.departmentsService = departmentsService;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -22,6 +24,7 @@ namespace DepartmentsAPI.Controllers
         {
             var result = await departmentsService.GetAll();
 
+            logger.LogInformation("Getting list of all departments");
             return result.Match<ActionResult<ResponseDto>>(
                 succ => Ok(new ResponseDto() { IsSucceeded = true, Result = succ}),
                 fail => StatusCode(500));
