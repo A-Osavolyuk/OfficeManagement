@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazor", "blazor", "{E8E1CF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficeManagerMVC", "OfficeManagerMVC\OfficeManagerMVC.csproj", "{05AF4977-1FE0-4EC9-BF7F-C7B9FFC4AC2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthAPI", "AuthAPI\AuthAPI.csproj", "{27599ABD-0FA7-490C-BE99-4FE012F3E487}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthAPI", "AuthAPI\AuthAPI.csproj", "{27599ABD-0FA7-490C-BE99-4FE012F3E487}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
