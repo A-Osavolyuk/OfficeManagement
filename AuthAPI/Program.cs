@@ -8,6 +8,9 @@ using Serilog;
 using System.Reflection;
 using Serilog.Exceptions;
 using AuthAPI.Models;
+using FluentValidation;
+using AuthAPI.Services.Interfaces;
+using AuthAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,11 @@ builder.Services.AddDbContextFactory<DataContext>(o => o.UseSqlServer(builder.Co
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 ConfigureLogging();
 builder.Host.UseSerilog();
