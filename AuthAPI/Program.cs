@@ -7,6 +7,7 @@ using Serilog.Sinks.Elasticsearch;
 using Serilog;
 using System.Reflection;
 using Serilog.Exceptions;
+using AuthAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JWT-Options"));
 
 builder.Services.AddDbContextFactory<DataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
 
