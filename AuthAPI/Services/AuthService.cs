@@ -20,6 +20,7 @@ namespace AuthAPI.Services
         private readonly IValidator<RegistrationRequestDto> validator;
         private readonly IMapper mapper;
         private readonly IUserStore<AppUser> userStore;
+        private readonly SignInManager<AppUser> signInManager;
 
         public AuthService(
             IDbContextFactory<DataContext> dbContextFactory,
@@ -27,7 +28,8 @@ namespace AuthAPI.Services
             RoleManager<IdentityRole> roleManager,
             IValidator<RegistrationRequestDto> validator,
             IMapper mapper,
-            IUserStore<AppUser> userStore)
+            IUserStore<AppUser> userStore,
+            SignInManager<AppUser> signInManager)
         {
             this.dbContextFactory = dbContextFactory;
             this.userManager = userManager;
@@ -35,6 +37,7 @@ namespace AuthAPI.Services
             this.validator = validator;
             this.mapper = mapper;
             this.userStore = userStore;
+            this.signInManager = signInManager;
         }
 
         public async ValueTask<Result<bool>> AssignRole(string email, string roleName)
@@ -55,7 +58,33 @@ namespace AuthAPI.Services
         {
             using var context = await dbContextFactory.CreateDbContextAsync();
 
-            return new();
+            var user = await userManager.FindByEmailAsync(loginRequestDTO.Email);
+
+            if (user == null)
+            {
+                return new(new Exception($"Cannot find user with email: {loginRequestDTO.Email}. Check your email address."));
+            }
+
+            var isValidPassword = await userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
+
+            if (!isValidPassword)
+            {
+                return new(new Exception("Invalid password. Please check your password."));
+            }
+
+            var result = await signInManager.PasswordSignInAsync(user, loginRequestDTO.Password, false, false);
+
+            if (result.Succeeded)
+            {
+                var token = string.Empty;
+                return new Result<LoginResponseDto>(new LoginResponseDto()
+                {
+                    Token = token,
+                    User = mapper.Map<UserDto>(user)
+                });
+            }
+
+            return new(new Exception("Something went wrong while tried to log in. Please try again later or contact us."));
         }
 
         public async ValueTask<Result<UserDto>> Register(RegistrationRequestDto registrationRequestDTO)

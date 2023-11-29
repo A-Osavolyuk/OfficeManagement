@@ -19,10 +19,31 @@ namespace AuthAPI.Controllers
             this.logger = logger;
         }
 
-        //public async ValueTask<ActionResult<ResponseDto>> Login()
-        //{
-        //    return Ok();
-        //}
+        public async ValueTask<ActionResult<ResponseDto>> Login([FromBody] LoginRequestDto loginRequestDto)
+        {
+            var result = await authService.Login(loginRequestDto);
+
+            return result.Match<ActionResult<ResponseDto>>(
+                succ =>
+                {
+                    logger.LogInformation($"User with email: {loginRequestDto.Email} successful logged in.");
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Message = $"User with email: {loginRequestDto.Email} successful logged in.",
+                        Result = succ
+                    });
+                },
+                fail =>
+                {
+                    logger.LogWarning($"Exception while logging in user: {fail.Message}", 50);
+                    return BadRequest(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = fail.Message
+                    });
+                });
+        }
 
         [HttpPost("Register")]
         public async ValueTask<ActionResult<ResponseDto>> Register([FromBody]RegistrationRequestDto registrationRequestDto)
@@ -44,7 +65,7 @@ namespace AuthAPI.Controllers
                 {
                     if (fail is ValidationException exception)
                     {
-                        logger.LogWarning($"Validation exception: {exception.Message}");
+                        logger.LogWarning($"Validation exception: {exception.Message}", 50);
                         return BadRequest(new ResponseDto()
                         {
                             IsSucceeded = false,
@@ -52,7 +73,7 @@ namespace AuthAPI.Controllers
                         });
                     }
 
-                    logger.LogWarning($"Exception with registration: {fail.Message}");
+                    logger.LogWarning($"Exception with registration: {fail.Message}", 50);
                     return BadRequest(fail.Message);
                 });
         }
