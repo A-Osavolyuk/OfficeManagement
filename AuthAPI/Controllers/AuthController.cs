@@ -19,6 +19,7 @@ namespace AuthAPI.Controllers
             this.logger = logger;
         }
 
+        [HttpPost("Login")]
         public async ValueTask<ActionResult<ResponseDto>> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             var result = await authService.Login(loginRequestDto);
