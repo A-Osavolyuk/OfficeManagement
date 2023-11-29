@@ -43,11 +43,39 @@ namespace AuthAPI.Services
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async ValueTask<Result<bool>> AssignRole(string email, string roleName)
+        public async ValueTask<Result<string>> AssignRole(string email, string roleName)
         {
             using var context = await dbContextFactory.CreateDbContextAsync();
 
-            return new();
+            var user = await userManager.FindByNameAsync(email);
+
+            if (user == null)
+            {
+                return new(new Exception($"Cannot find user with email: {email}"));
+            }
+
+            var isRoleExisting = await roleManager.RoleExistsAsync(roleName);
+            
+            if (!isRoleExisting)
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+
+            var hasUserRole = await userManager.IsInRoleAsync(user, roleName);
+
+            if (hasUserRole)
+            {
+                return new Result<string>(new Exception("User already has this role."));
+            }
+
+            var result = await userManager.AddToRoleAsync(user, roleName);
+
+            if (result.Succeeded)
+            {
+                return $"Role: {roleName} has successful assigned to user.";
+            }
+
+            return new Result<string>(new Exception(result.Errors.First().Description));
         }
 
         public async ValueTask<Result<bool>> ChangePasswordAsync(ChangePasswordRequestDto changePasswordRequest)

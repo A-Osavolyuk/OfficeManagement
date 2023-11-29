@@ -81,10 +81,31 @@ namespace AuthAPI.Controllers
                 });
         }
 
-        //public async ValueTask<ActionResult<ResponseDto>> AssignRole()
-        //{
-        //    return Ok();
-        //}
+        [HttpPost("AssignRole")]
+        public async ValueTask<ActionResult<ResponseDto>> AssignRole([FromBody]AssignRoleRequestDto assignRoleRequestDto)
+        {
+            var result = await authService.AssignRole(assignRoleRequestDto.Email, assignRoleRequestDto.RoleName);
+
+            return result.Match<ActionResult<ResponseDto>>(
+                succ =>
+                {
+                    logger.LogInformation(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Message = succ
+                    });
+                },
+                fail =>
+                {
+                    logger.LogWarning($"Exception while trying assign role: {fail.Message}");
+                    return BadRequest(new ResponseDto()
+                    {
+                        IsSucceeded= false,
+                        Message = fail.Message
+                    });
+                });
+        }
 
         //public async ValueTask<ActionResult<ResponseDto>> ChangePassword()
         //{

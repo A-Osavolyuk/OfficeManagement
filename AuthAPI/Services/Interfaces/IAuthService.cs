@@ -7,7 +7,7 @@ namespace AuthAPI.Services.Interfaces
     {
         ValueTask<Result<UserDto>> Register(RegistrationRequestDto registrationRequestDTO);
         ValueTask<Result<LoginResponseDto>> Login(LoginRequestDto loginRequestDTO);
-        ValueTask<Result<bool>> AssignRole(string email, string roleName);
+        ValueTask<Result<string>> AssignRole(string email, string roleName);
         ValueTask<Result<bool>> ChangePasswordAsync(ChangePasswordRequestDto changePasswordRequest);
 
     }
