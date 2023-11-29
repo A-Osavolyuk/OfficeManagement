@@ -21,6 +21,7 @@ namespace AuthAPI.Services
         private readonly IMapper mapper;
         private readonly IUserStore<AppUser> userStore;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly IJwtTokenGenerator jwtTokenGenerator;
 
         public AuthService(
             IDbContextFactory<DataContext> dbContextFactory,
@@ -29,7 +30,8 @@ namespace AuthAPI.Services
             IValidator<RegistrationRequestDto> validator,
             IMapper mapper,
             IUserStore<AppUser> userStore,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager,
+            IJwtTokenGenerator jwtTokenGenerator)
         {
             this.dbContextFactory = dbContextFactory;
             this.userManager = userManager;
@@ -38,6 +40,7 @@ namespace AuthAPI.Services
             this.mapper = mapper;
             this.userStore = userStore;
             this.signInManager = signInManager;
+            this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
         public async ValueTask<Result<bool>> AssignRole(string email, string roleName)
@@ -76,7 +79,7 @@ namespace AuthAPI.Services
 
             if (result.Succeeded)
             {
-                var token = string.Empty;
+                var token = jwtTokenGenerator.GenerateTokenAsync(user);
                 return new Result<LoginResponseDto>(new LoginResponseDto()
                 {
                     Token = token,

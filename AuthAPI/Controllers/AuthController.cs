@@ -13,7 +13,9 @@ namespace AuthAPI.Controllers
         private readonly IAuthService authService;
         private readonly ILogger<AuthController> logger;
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger)
+        public AuthController(
+            IAuthService authService, 
+            ILogger<AuthController> logger)
         {
             this.authService = authService;
             this.logger = logger;
