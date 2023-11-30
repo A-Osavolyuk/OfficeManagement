@@ -47,7 +47,7 @@ namespace AuthAPI.Services
         {
             using var context = await dbContextFactory.CreateDbContextAsync();
 
-            var user = await userManager.FindByNameAsync(email);
+            var user = await userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
