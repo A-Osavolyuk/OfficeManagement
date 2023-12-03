@@ -17,10 +17,12 @@ builder.Services.Configure<HttpData>(builder.Configuration.GetSection("HttpData"
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IDepartmentHttpService, DepartmentHttpService>();
+builder.Services.AddHttpClient<IAuthHttpService, AuthHttpService>();
 
 builder.Services.AddScoped<IValidator<DepartmentDto>, DepartmentValidator>();
 builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
 builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
+builder.Services.AddScoped<IAuthHttpService, AuthHttpService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -5,9 +5,9 @@ namespace OfficeManagerMVC.Services.Interfaces
 {
     public interface IAuthHttpService
     {
-        ValueTask<Result<UserDto>> Register(RegistrationRequestDto registrationRequestDTO);
-        ValueTask<Result<LoginResponseDto>> Login(LoginRequestDto loginRequestDTO);
-        ValueTask<Result<string>> AssignRole(string email, string roleName);
-        ValueTask<Result<bool>> ChangePasswordAsync(ChangePasswordRequestDto changePasswordRequest);
+        ValueTask<ResponseDto> Register(RegistrationRequestDto registrationRequestDTO);
+        ValueTask<ResponseDto> Login(LoginRequestDto loginRequestDTO);
+        ValueTask<ResponseDto> AssignRole(string email, string roleName);
+        ValueTask<ResponseDto> ChangePasswordAsync(ChangePasswordRequestDto changePasswordRequest);
     }
 }
