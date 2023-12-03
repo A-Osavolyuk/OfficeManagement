@@ -1,7 +1,10 @@
-﻿namespace OfficeManagerMVC.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OfficeManagerMVC.Models.DTOs
 {
     public class RegistrationRequestDto
     {
+        [Display(Name = "User Name")]
         public string UserName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
