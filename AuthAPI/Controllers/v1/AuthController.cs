@@ -4,9 +4,9 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthAPI.Controllers
+namespace AuthAPI.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -14,7 +14,7 @@ namespace AuthAPI.Controllers
         private readonly ILogger<AuthController> logger;
 
         public AuthController(
-            IAuthService authService, 
+            IAuthService authService,
             ILogger<AuthController> logger)
         {
             this.authService = authService;
@@ -49,7 +49,7 @@ namespace AuthAPI.Controllers
         }
 
         [HttpPost("Register")]
-        public async ValueTask<ActionResult<ResponseDto>> Register([FromBody]RegistrationRequestDto registrationRequestDto)
+        public async ValueTask<ActionResult<ResponseDto>> Register([FromBody] RegistrationRequestDto registrationRequestDto)
         {
             var result = await authService.Register(registrationRequestDto);
 
@@ -59,8 +59,8 @@ namespace AuthAPI.Controllers
                     logger.LogInformation($"User with email: {registrationRequestDto.Email} was registered successful.");
                     return Ok(new ResponseDto()
                     {
-                        IsSucceeded = true, 
-                        Message = $"User with email: {registrationRequestDto.Email} was registered successful.", 
+                        IsSucceeded = true,
+                        Message = $"User with email: {registrationRequestDto.Email} was registered successful.",
                         Result = succ
                     });
                 },
@@ -82,7 +82,7 @@ namespace AuthAPI.Controllers
         }
 
         [HttpPost("AssignRole")]
-        public async ValueTask<ActionResult<ResponseDto>> AssignRole([FromBody]AssignRoleRequestDto assignRoleRequestDto)
+        public async ValueTask<ActionResult<ResponseDto>> AssignRole([FromBody] AssignRoleRequestDto assignRoleRequestDto)
         {
             var result = await authService.AssignRole(assignRoleRequestDto.Email, assignRoleRequestDto.RoleName);
 
@@ -101,7 +101,7 @@ namespace AuthAPI.Controllers
                     logger.LogWarning($"Exception while trying assign role: {fail.Message}");
                     return BadRequest(new ResponseDto()
                     {
-                        IsSucceeded= false,
+                        IsSucceeded = false,
                         Message = fail.Message
                     });
                 });

@@ -24,7 +24,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.POST,
-                Url = httpData.DepartmentsAPI + "/api/Departments",
+                Url = httpData.DepartmentsAPI + "/api/v1/Departments",
                 Data = department
             });
         }
@@ -34,7 +34,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.DELETE,
-                Url = httpData.DepartmentsAPI + $"/api/Departments/{id}"
+                Url = httpData.DepartmentsAPI + $"/api/v1/Departments/{id}"
             });
         }
 
@@ -43,7 +43,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.GET,
-                Url = httpData.DepartmentsAPI + "/api/Departments",
+                Url = httpData.DepartmentsAPI + "/api/v1/Departments",
             });
         }
 
@@ -52,7 +52,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.GET,
-                Url = httpData.DepartmentsAPI + $"/api/Departments/{id}",
+                Url = httpData.DepartmentsAPI + $"/api/v1/Departments/{id}",
             });
         }
 
@@ -61,7 +61,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.PUT,
-                Url = httpData.DepartmentsAPI + $"/api/Departments/{id}",
+                Url = httpData.DepartmentsAPI + $"/api/v1/Departments/{id}",
                 Data = department
             });
         }
