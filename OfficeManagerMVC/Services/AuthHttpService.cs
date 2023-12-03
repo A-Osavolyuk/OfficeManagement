@@ -20,13 +20,13 @@ namespace OfficeManagerMVC.Services
             this.httpData = httpData.Value;
         }
 
-        public async ValueTask<ResponseDto> AssignRole(string email, string roleName)
+        public async ValueTask<ResponseDto> AssignRole(AssignRoleRequestDto assignRoleRequestDto)
         {
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.POST,
                 Url = httpData.AuthAPI + "/api/v1/Auth/AssignRole",
-                Data = roleName
+                Data = assignRoleRequestDto
             });
         }
 

@@ -7,7 +7,7 @@ namespace OfficeManagerMVC.Services.Interfaces
     {
         ValueTask<ResponseDto> Register(RegistrationRequestDto registrationRequestDTO);
         ValueTask<ResponseDto> Login(LoginRequestDto loginRequestDTO);
-        ValueTask<ResponseDto> AssignRole(string email, string roleName);
+        ValueTask<ResponseDto> AssignRole(AssignRoleRequestDto assignRoleRequestDto);
         ValueTask<ResponseDto> ChangePasswordAsync(ChangePasswordRequestDto changePasswordRequest);
     }
 }
