@@ -1,12 +1,12 @@
 ﻿using DepartmentsAPI.Models.DTOs;
 using DepartmentsAPI.Services.Interfaces;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DepartmentsAPI.Controllers
+namespace DepartmentsAPI.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
@@ -56,7 +56,7 @@ namespace DepartmentsAPI.Controllers
         }
 
         [HttpPost]
-        public async ValueTask<ActionResult<ResponseDto>> CreateDepartment([FromBody]DepartmentDto department)
+        public async ValueTask<ActionResult<ResponseDto>> CreateDepartment([FromBody] DepartmentDto department)
         {
             var result = await departmentsService.Create(department);
 
@@ -84,9 +84,10 @@ namespace DepartmentsAPI.Controllers
                     logger.LogInformation($"Department with id: {id} was deleted successful.");
                     return Ok(new ResponseDto() { IsSucceeded = true, Message = $"Department with id: {id} was deleted successful." });
                 },
-                fail => { 
-                    logger.LogWarning(fail.Message); 
-                    return NotFound(fail.Message); 
+                fail =>
+                {
+                    logger.LogWarning(fail.Message);
+                    return NotFound(fail.Message);
                 });
         }
 
