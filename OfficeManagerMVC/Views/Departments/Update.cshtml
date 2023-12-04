@@ -1,8 +1,7 @@
-﻿@model OfficeManagerMVC.Models.Entities.Department
+﻿@model Department
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Edit Department</h1>
@@ -33,4 +32,8 @@
     </div>
 </div>
 
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

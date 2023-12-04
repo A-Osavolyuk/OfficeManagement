@@ -25,7 +25,7 @@ namespace OfficeManagerMVC.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View(new RegistrationRequestDto());
+            return View();
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace OfficeManagerMVC.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View(new LoginRequestDto());
+            return View();
         }
 
         [HttpPost]
