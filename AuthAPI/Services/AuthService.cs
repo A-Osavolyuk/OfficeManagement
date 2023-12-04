@@ -107,7 +107,8 @@ namespace AuthAPI.Services
 
             if (result.Succeeded)
             {
-                var token = jwtTokenGenerator.GenerateTokenAsync(user);
+                var roles = await userManager.GetRolesAsync(user);
+                var token = jwtTokenGenerator.GenerateTokenAsync(user, roles);
                 return new Result<LoginResponseDto>(new LoginResponseDto()
                 {
                     Token = token,
