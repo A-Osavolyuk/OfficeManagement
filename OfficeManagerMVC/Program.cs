@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using OfficeManagerMVC.Common;
 using OfficeManagerMVC.Models.DTOs;
 using OfficeManagerMVC.Services;
@@ -23,6 +24,16 @@ builder.Services.AddScoped<IValidator<DepartmentDto>, DepartmentValidator>();
 builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
 builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
 builder.Services.AddScoped<IAuthHttpService, AuthHttpService>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.AccessDeniedPath = "/Auth/AccessDenied";
+        options.LogoutPath = "/Auth/Logout";
+        options.LoginPath = "/Auth/Login";
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -41,6 +52,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
