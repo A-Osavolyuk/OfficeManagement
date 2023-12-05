@@ -39,6 +39,10 @@ namespace OfficeManagerMVC.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    TempData["error"] = result.Message;
+                }
 
                 ModelState.AddModelError("", result.Message);
             }
@@ -67,6 +71,10 @@ namespace OfficeManagerMVC.Controllers
                     await SignInUser(loginResponse);
                     tokenProvider.SetToken(loginResponse.Token);
                     return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["error"] = result.Message;
                 }
 
                 ModelState.AddModelError("", result.Message);

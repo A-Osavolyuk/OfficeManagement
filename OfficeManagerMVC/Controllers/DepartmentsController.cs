@@ -28,6 +28,10 @@ namespace OfficeManagerMVC.Controllers
                 var departments = JsonConvert.DeserializeObject<IEnumerable<Department>>(result.Result.ToString());
                 return View(departments);
             }
+            else
+            {
+                TempData["error"] = result.Message;
+            }
 
             return View();
         }
@@ -49,6 +53,10 @@ namespace OfficeManagerMVC.Controllers
                 {
                     return RedirectToAction("departmentsList", "departments");
                 }
+                else
+                {
+                    TempData["error"] = result.Message;
+                }
 
                 ModelState.AddModelError("", result.Message);
             }
@@ -66,6 +74,10 @@ namespace OfficeManagerMVC.Controllers
                 var department = JsonConvert.DeserializeObject<Department>(result.Result.ToString());
                 return View(department);
             }
+            else
+            {
+                TempData["error"] = result.Message;
+            }
 
             return NotFound();
         }
@@ -80,6 +92,10 @@ namespace OfficeManagerMVC.Controllers
                 if (result.IsSucceeded)
                 {
                     return RedirectToAction("departmentsList", "departments");
+                }
+                else
+                {
+                    TempData["error"] = result.Message;
                 }
 
                 ModelState.AddModelError("", result.Message);
@@ -96,6 +112,10 @@ namespace OfficeManagerMVC.Controllers
             if (result.IsSucceeded)
             {
                 return RedirectToAction("departmentsList", "departments");
+            }
+            else
+            {
+                TempData["error"] = result.Message;
             }
 
             return NotFound();
