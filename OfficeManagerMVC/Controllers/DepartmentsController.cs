@@ -51,6 +51,7 @@ namespace OfficeManagerMVC.Controllers
 
                 if (result.IsSucceeded)
                 {
+                    TempData["success"] = $"Department was successful created.";
                     return RedirectToAction("departmentsList", "departments");
                 }
                 else
@@ -91,6 +92,7 @@ namespace OfficeManagerMVC.Controllers
 
                 if (result.IsSucceeded)
                 {
+                    TempData["success"] = $"Department was successful updated.";
                     return RedirectToAction("departmentsList", "departments");
                 }
                 else
@@ -111,6 +113,7 @@ namespace OfficeManagerMVC.Controllers
 
             if (result.IsSucceeded)
             {
+                TempData["success"] = $"Department was successful deleted";
                 return RedirectToAction("departmentsList", "departments");
             }
             else

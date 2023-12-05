@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using LanguageExt;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -37,6 +38,7 @@ namespace OfficeManagerMVC.Controllers
 
                 if (result.IsSucceeded)
                 {
+                    TempData["success"] = result.Message;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -70,6 +72,7 @@ namespace OfficeManagerMVC.Controllers
 
                     await SignInUser(loginResponse);
                     tokenProvider.SetToken(loginResponse.Token);
+                    TempData["success"] = result.Message;
                     return RedirectToAction("Index", "Home");
                 }
                 else
