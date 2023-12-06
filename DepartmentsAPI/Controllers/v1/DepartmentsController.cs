@@ -66,7 +66,7 @@ namespace DepartmentsAPI.Controllers.v1
             return result.Match<ActionResult<ResponseDto>>(
                 succ =>
                 {
-                    logger.LogInformation($"Department with name: {succ.DepartmentName} was create successful.");
+                    logger.LogInformation($"Department with name: {succ.DepartmentName} was successful create.");
                     return Ok(new ResponseDto() { IsSucceeded = true, Result = succ });
                 },
                 fail =>
@@ -84,7 +84,7 @@ namespace DepartmentsAPI.Controllers.v1
             return result.Match<ActionResult<ResponseDto>>(
                 succ =>
                 {
-                    logger.LogInformation($"Department with id: {id} was deleted successful.");
+                    logger.LogInformation($"Department with id: {id} was successful deleted.");
                     return Ok(new ResponseDto() { IsSucceeded = true, Message = $"Department with id: {id} was deleted successful." });
                 },
                 fail =>
@@ -102,7 +102,7 @@ namespace DepartmentsAPI.Controllers.v1
             return result.Match<ActionResult<ResponseDto>>(
                 succ =>
                 {
-                    logger.LogInformation($"Department with id: {succ.DepartmentId} was updated successful");
+                    logger.LogInformation($"Department with id: {succ.DepartmentId} was successful updated");
                     return Ok(new ResponseDto() { IsSucceeded = true, Result = succ });
                 },
                 fail =>
