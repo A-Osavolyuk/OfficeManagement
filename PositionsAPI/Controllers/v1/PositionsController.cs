@@ -41,10 +41,10 @@ namespace PositionsAPI.Controllers.v1
                 });
         }
 
-        [HttpGet("GetByPositionId/{id:int}")]
-        public async ValueTask<ActionResult<IEnumerable<Position>>> GetAllPositionsByPositionId(int id)
+        [HttpGet("GetByDepartmentId/{id:int}")]
+        public async ValueTask<ActionResult<IEnumerable<Position>>> GetAllPositionsByDepartmentId(int id)
         {
-            var result = await positionsService.GetAll();
+            var result = await positionsService.GetAllByDepartmentId(id);
 
             return result.Match<ActionResult<IEnumerable<Position>>>(
                 succ =>
@@ -137,13 +137,13 @@ namespace PositionsAPI.Controllers.v1
         [HttpDelete("{id:int}")]
         public async ValueTask<ActionResult<Position>> DeletePositionById(int id)
         {
-            var result = await positionsService.GetById(id);
+            var result = await positionsService.DeleteById(id);
 
             return result.Match<ActionResult<Position>>(
                 succ =>
                 {
                     logger.LogInformation($"Position with id: {id} was successful deleted.");
-                    return Ok(succ);
+                    return Ok($"Position with id: {id} was successful deleted.");
                 },
                 fail =>
                 {

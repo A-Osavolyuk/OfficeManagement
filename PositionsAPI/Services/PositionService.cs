@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using LanguageExt;
 using LanguageExt.Common;
 using Microsoft.EntityFrameworkCore;
 using PositionsAPI.Data;
@@ -65,7 +66,7 @@ namespace PositionsAPI.Services
                 return true;
             }
 
-            return new Result<bool>(new Exception($"Cannot find department with id: {id}."));
+            return new Result<bool>(new Exception($"Cannot find position with id: {id}."));
         }
 
         public async ValueTask<Result<IEnumerable<Position>>> GetAll()
@@ -84,10 +85,27 @@ namespace PositionsAPI.Services
             return new Result<IEnumerable<Position>>(positions);
         }
 
-        //TODO
-        public ValueTask<Result<IEnumerable<Position>>> GetAllByDepartmentId(int departmentId)
+        public async ValueTask<Result<IEnumerable<Position>>> GetAllByDepartmentId(int departmentId)
         {
-            throw new NotImplementedException();
+            using (var context = await dbContextFactory.CreateDbContextAsync())
+            {
+                var positions = await cacheService.GetAsync<IEnumerable<Position>>(key: $"positions-id-{departmentId}");
+
+                if (positions is null)
+                {
+                    positions = context.Positions.Where(x => x.DepartmentId == departmentId).Select(x => x).ToList();
+
+                    if (!positions.Any())
+                    {
+                        return new Result<IEnumerable<Position>>(new Exception($"Cannot find positions with departmentId: {departmentId}."));
+                    }
+
+                    await cacheService.SetAsync(key: $"positions-id-{departmentId}", positions, expirationTime);
+                    return new Result<IEnumerable<Position>>(positions);
+                }
+                return new Result<IEnumerable<Position>>(positions);
+            }
+            
         }
 
         public async ValueTask<Result<Position>> GetById(int id)
@@ -97,14 +115,18 @@ namespace PositionsAPI.Services
 
             if (position is null)
             {
-                position = await context.Positions.FirstOrDefaultAsync();
+                position = await context.Positions.FirstOrDefaultAsync(x => x.PositionId == id);
+
+                if (position is null)
+                {
+                    return new Result<Position>(new Exception($"Cannot find positions with id: {id}"));
+                }
 
                 await cacheService.SetAsync(key: $"position-id-{id}", position, expirationTime);
-
                 return new Result<Position>(position);
             }
 
-            return new Result<Position>(new Exception($"Cannot find positions with id: {id}"));
+            return new Result<Position>(position);
         }
 
         public async ValueTask<Result<Position>> GetByName(string name)
@@ -114,7 +136,7 @@ namespace PositionsAPI.Services
 
             if (position is null)
             {
-                position = await context.Positions.FirstOrDefaultAsync();
+                position = await context.Positions.FirstOrDefaultAsync(x => x.PositionName.ToUpper() == name.ToUpper());
 
                 await cacheService.SetAsync(key: $"position-name-{name}", position, expirationTime);
 
