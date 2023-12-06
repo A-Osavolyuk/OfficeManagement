@@ -10,19 +10,28 @@ namespace OfficeManagerMVC.Services
     public class BaseHttpService : IBaseHttpService
     {
         private readonly HttpClient httpClient;
+        private readonly ITokenProvider tokenProvider;
 
-        public BaseHttpService(IHttpClientFactory clientFactory)
+        public BaseHttpService(IHttpClientFactory clientFactory, ITokenProvider tokenProvider)
         {
             httpClient = clientFactory.CreateClient("OfficeManagerClient");
+            this.tokenProvider = tokenProvider;
         }
 
-        public async Task<ResponseDto?> SendAsync(RequestDto request)
+        public async Task<ResponseDto?> SendAsync(RequestDto request, bool withBearer = true)
         {
             try
             {
                 HttpRequestMessage message = new();
 
                 message.Headers.Add("Accept", "application/json");
+
+                if (withBearer)
+                {
+                    var token = tokenProvider.GetToken();
+                    message.Headers.Add("Authorization", $"Bearer {token}");
+                }
+
                 message.RequestUri = new Uri(request.Url);
 
                 if (request.Data is not null)

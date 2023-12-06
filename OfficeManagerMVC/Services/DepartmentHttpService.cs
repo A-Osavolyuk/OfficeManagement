@@ -25,7 +25,7 @@ namespace OfficeManagerMVC.Services
             {
                 Method = ApiMethod.POST,
                 Url = httpData.DepartmentsAPI + "/api/v1/Departments",
-                Data = department
+                Data = department,
             });
         }
 

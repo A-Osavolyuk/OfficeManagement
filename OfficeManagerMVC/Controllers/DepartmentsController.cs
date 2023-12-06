@@ -33,7 +33,7 @@ namespace OfficeManagerMVC.Controllers
                 TempData["error"] = result.Message;
             }
 
-            return View();
+            return View(new List<Department>());
         }
 
         [HttpGet]

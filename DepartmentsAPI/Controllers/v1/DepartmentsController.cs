@@ -1,6 +1,8 @@
 ﻿using DepartmentsAPI.Models.DTOs;
 using DepartmentsAPI.Services.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DepartmentsAPI.Controllers.v1
@@ -8,6 +10,7 @@ namespace DepartmentsAPI.Controllers.v1
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class DepartmentsController : ControllerBase
     {
         private readonly IDepartmentsService departmentsService;
