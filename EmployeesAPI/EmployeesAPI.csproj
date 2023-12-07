@@ -40,8 +40,6 @@
 
 	<ItemGroup>
 		<Folder Include="Controllers\v1\" />
-		<Folder Include="Mapping\" />
-		<Folder Include="Validation\" />
 	</ItemGroup>
 
 </Project>
