@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PositionsAPI.Models.DTOs;
 using PositionsAPI.Models.Entities;
@@ -10,6 +10,7 @@ namespace PositionsAPI.Controllers.v1
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class PositionsController : ControllerBase
     {
         private readonly IPositionsService positionsService;
