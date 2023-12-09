@@ -36,7 +36,7 @@ namespace DepartmentsAPI.Controllers.v1
                 fail =>
                 {
                     logger.LogWarning("Cannot get list of all departments. Status code 500.");
-                    return StatusCode(500);
+                    return BadRequest(new ResponseDto() { IsSucceeded = false, Message = "Cannot get list of all departments. Status code 500." });
                 });
         }
 
@@ -54,7 +54,7 @@ namespace DepartmentsAPI.Controllers.v1
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto() { IsSucceeded = false, Message = fail.Message });
                 });
         }
 
@@ -72,7 +72,7 @@ namespace DepartmentsAPI.Controllers.v1
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return BadRequest(fail.Message);
+                    return BadRequest(new ResponseDto() { IsSucceeded = false, Message = fail.Message});
                 });
         }
 
@@ -90,7 +90,7 @@ namespace DepartmentsAPI.Controllers.v1
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto() { IsSucceeded = false, Message = fail.Message });
                 });
         }
 
@@ -110,11 +110,11 @@ namespace DepartmentsAPI.Controllers.v1
                     if (fail is ValidationException exception)
                     {
                         logger.LogWarning(exception.Message);
-                        return BadRequest(exception.Message);
+                        return BadRequest(new ResponseDto() { IsSucceeded = false, Message = exception.Message });
                     }
 
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto() { IsSucceeded = false, Message = fail.Message });
                 });
         }
     }

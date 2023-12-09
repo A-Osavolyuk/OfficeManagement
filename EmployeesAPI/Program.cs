@@ -98,6 +98,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 
 ConfigureLogging();
 builder.Host.UseSerilog();

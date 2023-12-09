@@ -33,12 +33,20 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation("Successful getting list of all positions.");
-                    return Ok(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Result = succ
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning("Cannot get list of all positions. Status code 500.");
-                    return StatusCode(500);
+                    return BadRequest(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = "Cannot get list of all positions. Status code 500."
+                    });
                 });
         }
 
@@ -51,12 +59,20 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation($"Successful getting list of all positions with department id: {id}.");
-                    return Ok(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Result = succ
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = fail.Message
+                    });
                 });
         }
 
@@ -69,12 +85,20 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation($"Successful getting department with id: {id}.");
-                    return Ok(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Result = succ
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = fail.Message
+                    });
                 });
         }
 
@@ -87,12 +111,20 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation($"Successful getting department with name: {name}.");
-                    return Ok(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Result = succ
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = fail.Message
+                    });
                 });
         }
 
@@ -105,12 +137,20 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation($"Position with name: {positionDto.PositionName} was successful created.");
-                    return Ok(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Result = succ
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return BadRequest(fail.Message);
+                    return BadRequest(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = fail.Message
+                    });
                 });
         }
 
@@ -123,15 +163,30 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation($"Position with name: {positionDto.PositionName} was successful updated.");
-                    return Ok(succ);
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Result = succ
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    
+
                     if (fail is ValidationException exception)
-                        return BadRequest(exception.Message);
-                    return NotFound(fail.Message);
+                    {
+                        return BadRequest(new ResponseDto()
+                        {
+                            IsSucceeded = true,
+                            Message = exception.Message
+                        });
+                    }
+                        
+                    return NotFound(new ResponseDto()
+                    {
+                        IsSucceeded = true,
+                        Message = fail.Message
+                    });
                 });
         }
 
@@ -144,12 +199,20 @@ namespace PositionsAPI.Controllers.v1
                 succ =>
                 {
                     logger.LogInformation($"Position with id: {id} was successful deleted.");
-                    return Ok($"Position with id: {id} was successful deleted.");
+                    return Ok(new ResponseDto()
+                    {
+                        IsSucceeded= true,
+                        Message = $"Position with id: {id} was successful deleted."
+                    });
                 },
                 fail =>
                 {
                     logger.LogWarning(fail.Message);
-                    return NotFound(fail.Message);
+                    return NotFound(new ResponseDto()
+                    {
+                        IsSucceeded = false,
+                        Message = fail.Message
+                    });
                 });
         }
     }

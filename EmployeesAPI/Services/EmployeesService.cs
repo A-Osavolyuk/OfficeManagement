@@ -116,10 +116,11 @@ namespace EmployeesAPI.Services
 
             if(employee is null)
             {
-                if(employee is null)
-                {
-                    employee = await context.Employees.FirstOrDefaultAsync(x => x.Email == email);
 
+                employee = await context.Employees.FirstOrDefaultAsync(x => x.Email == email);
+
+                if (employee is null)
+                {
                     return new Result<Employee>(new Exception($"Cannot find employee with email: {email}."));
                 }
 
@@ -138,10 +139,10 @@ namespace EmployeesAPI.Services
 
             if (employee is null)
             {
+                employee = await context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == id);
+
                 if (employee is null)
                 {
-                    employee = await context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == id);
-
                     return new Result<Employee>(new Exception($"Cannot find employee with id: {id}."));
                 }
 
@@ -155,30 +156,39 @@ namespace EmployeesAPI.Services
 
         public async ValueTask<Result<Employee>> Update(int id, EmployeeDto employeeDto)
         {
-            using var context = await dbContextFactory.CreateDbContextAsync();
-            var employee = await context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == id);
-            var result = await validator.ValidateAsync(employeeDto);
-
-            if (!result.IsValid)
+            using (var context = await dbContextFactory.CreateDbContextAsync())
             {
-                return new(new ValidationException(result.Errors.First().ErrorMessage));
+                var employee = await context.Employees.FirstOrDefaultAsync(x => x.EmployeeId == id);
+                var result = await validator.ValidateAsync(employeeDto);
+
+                if (!result.IsValid)
+                {
+                    return new(new ValidationException(result.Errors.First().ErrorMessage));
+                }
+
+                if (employee is null)
+                {
+                    return new(new Exception($"Cannot find employee with id: {id}."));
+                }
+
+                employee.FirstName = employeeDto.FirstName;
+                employee.LastName = employeeDto.LastName;
+                employee.Email = employeeDto.Email;
+                employee.DateOfBirth = employeeDto.DateOfBirth;
+                employee.DateOfHire = employeeDto.DateOfHire;
+                employee.Gender = employeeDto.Gender;
+                employee.PositionId = employeeDto.PositionId;
+                employee.EmployeeId = id;
+
+                context.Update(employee);
+                await context.SaveChangesAsync();
+
+                await cacheService.SetAsync($"employee-id-{id}", employee, expirationTime);
+                await RefreshData();
+
+                return new(employee);
             }
-
-            if (employee is null)
-            {
-                return new(new Exception($"Cannot find employee with id: {id}."));
-            }
-
-            var tempEmployee = mapper.Map<Employee>(employeeDto);
-            tempEmployee.EmployeeId = id;
-
-            context.Update(tempEmployee);
-            await context.SaveChangesAsync();
-
-            await cacheService.SetAsync($"employee-id-{id}", tempEmployee, expirationTime);
-            await RefreshData();
-
-            return new(tempEmployee);
+            
         }
 
         private async ValueTask RefreshData()
