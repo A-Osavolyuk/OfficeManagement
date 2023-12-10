@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeesAPI", "EmployeesAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PositionsAPI", "PositionsAPI\PositionsAPI.csproj", "{7576B92D-FA7E-4106-AFE9-9CA1DEDAE4D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthCheckAPI", "HealthCheckAPI\HealthCheckAPI.csproj", "{74161625-8DE7-4215-A3EA-2BC05CE50060}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthCheckAPI", "HealthCheckAPI\HealthCheckAPI.csproj", "{74161625-8DE7-4215-A3EA-2BC05CE50060}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8C85352A-2927-4F95-AE98-DEB4D4D63114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
