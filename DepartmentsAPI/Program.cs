@@ -1,9 +1,12 @@
 using DepartmentsAPI.Data;
+using DepartmentsAPI.HealthChecks;
 using DepartmentsAPI.Services;
 using DepartmentsAPI.Services.Interfaces;
 using FluentValidation;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHealthChecks().AddCheck<DatabaseHealthChecks>("Database");
 
 var jwtOptions = builder.Configuration.GetSection("JWT-Options");
 
@@ -117,6 +121,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseHealthChecks("/health", new HealthCheckOptions()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
 
