@@ -25,7 +25,7 @@ namespace TaskManagerAPI.HealthChecks
         {
             using var context = await dbContextFactory.CreateDbContextAsync();
 
-            return context.Tasks.Any();
+            return await context.Tasks.ToListAsync() is not null? true : false;
         }
     }
 }
