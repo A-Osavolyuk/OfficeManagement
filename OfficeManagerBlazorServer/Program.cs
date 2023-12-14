@@ -1,18 +1,48 @@
+using Blazored.LocalStorage;
+using Blazored.SessionStorage;
+using Blazored.Toast;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using MudBlazor.Services;
+using OfficeManagerBlazorServer.Common;
 using OfficeManagerBlazorServer.Components;
+using OfficeManagerBlazorServer.Models.DTOs;
+using OfficeManagerBlazorServer.Services;
+using OfficeManagerBlazorServer.Services.Interfaces;
+using OfficeManagerBlazorServer.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddMudServices();
+builder.Services.AddBlazoredToast();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddBlazoredSessionStorage();
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.Configure<HttpData>(builder.Configuration.GetSection("HttpData"));
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<IDepartmentHttpService, DepartmentHttpService>();
+builder.Services.AddHttpClient<IAuthHttpService, AuthHttpService>();
+
+builder.Services.AddScoped<IAuthHttpService, AuthHttpService>();
+builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
+builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

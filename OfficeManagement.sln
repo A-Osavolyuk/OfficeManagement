@@ -33,9 +33,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "react", "react", "{676A3224
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "angular", "angular", "{93350621-092F-441E-B3CF-B6A63B9667E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerAPI", "TaskManagerAPI\TaskManagerAPI.csproj", "{329E3A55-E845-4291-BCA0-9E917E32B961}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagerAPI", "TaskManagerAPI\TaskManagerAPI.csproj", "{329E3A55-E845-4291-BCA0-9E917E32B961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeChatAPI", "OfficeChatAPI\OfficeChatAPI.csproj", "{8D2DEE9E-0E80-41F0-A5D0-141495F53ABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficeChatAPI", "OfficeChatAPI\OfficeChatAPI.csproj", "{8D2DEE9E-0E80-41F0-A5D0-141495F53ABA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

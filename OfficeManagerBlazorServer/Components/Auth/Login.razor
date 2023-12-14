@@ -1,0 +1,44 @@
+﻿@page "/auth/login"
+
+@inject NavigationManager navManager
+@inject IAuthHttpService authService
+@inject ITokenProvider TokenProvider
+@inject IToastService ToastService
+@inject AuthenticationStateProvider authenticationStateProvider
+
+<PageTitle>Log In</PageTitle>
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="4">
+        <MudPaper Outlined Class="pa-5">
+            <MudText Align="Align.Center" Typo="Typo.h4">Login</MudText>
+            <EditForm Model="login" OnValidSubmit="LoginUser">
+                <MudTextField @bind-Value="login.Email" For="@(() => login.Email)" Label="User Name" />
+                <MudTextField @bind-Value="login.Password" For="@(() => login.Password)" InputType="InputType.Password" Label="Password" />
+                <MudGrid Justify="Justify.Center" Class="mt-3">
+                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Class="w-50" Variant="Variant.Filled">Login</MudButton>
+                </MudGrid>
+            </EditForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter]
+    public LoginRequestDto login { get; set; } = new();
+
+    private async Task LoginUser()
+    {
+        var result = await authService.Login(login);
+
+        if (result.IsSucceeded)
+        {
+            ToastService.ShowSuccess(result.Message);
+            navManager.NavigateTo("/");
+        }
+        else
+        {
+            ToastService.ShowError(result.Message);
+        }
+    }
+}
