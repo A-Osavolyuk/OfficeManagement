@@ -24,6 +24,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Components\Departments\" />
+	  <Folder Include="Components\Employees\" />
+	  <Folder Include="Components\Positions\" />
 	  <Folder Include="wwwroot\libs\" />
 	</ItemGroup>
 

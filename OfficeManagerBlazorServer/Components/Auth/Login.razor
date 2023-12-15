@@ -1,5 +1,7 @@
 ﻿@page "/auth/login"
 
+@using Newtonsoft.Json
+
 @inject NavigationManager navManager
 @inject IAuthHttpService authService
 @inject ITokenProvider TokenProvider
@@ -30,9 +32,11 @@
     private async Task LoginUser()
     {
         var result = await authService.Login(login);
+        var loginResponse = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(result.Result));
 
         if (result.IsSucceeded)
         {
+            ((JwtAuthStateProvider)authenticationStateProvider).MarkUserAsAssigned(loginResponse.Token);
             ToastService.ShowSuccess(result.Message);
             navManager.NavigateTo("/");
         }

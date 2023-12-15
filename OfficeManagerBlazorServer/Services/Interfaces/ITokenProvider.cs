@@ -2,8 +2,8 @@
 {
     public interface ITokenProvider
     {
-        public void CleanToken();
-        public string GetToken();
-        public void SetToken(string token);
+        public ValueTask CleanTokenAsync();
+        public ValueTask<string> GetToken();
+        public ValueTask SetToken(string token);
     }
 }

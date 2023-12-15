@@ -3,7 +3,9 @@ using Blazored.SessionStorage;
 using Blazored.Toast;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
+using OfficeManagerBlazorServer;
 using OfficeManagerBlazorServer.Common;
 using OfficeManagerBlazorServer.Components;
 using OfficeManagerBlazorServer.Models.DTOs;
@@ -37,6 +39,7 @@ builder.Services.AddScoped<IAuthHttpService, AuthHttpService>();
 builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
 builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthStateProvider>();
 
 var app = builder.Build();
 

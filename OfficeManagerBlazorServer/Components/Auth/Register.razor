@@ -1,5 +1,50 @@
-﻿<h3>Register</h3>
+﻿@page "/auth/register"
+@using Blazored.FluentValidation
+@using FluentValidation
+
+@inject NavigationManager navManager
+@inject IAuthHttpService authService
+@inject ITokenProvider TokenProvider
+@inject IToastService ToastService
+@inject AuthenticationStateProvider authenticationStateProvider
+
+<PageTitle>Log In</PageTitle>
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="4">
+        <MudPaper Outlined Class="pa-5">
+            <MudText Align="Align.Center" Typo="Typo.h4">Register</MudText>
+            <EditForm Model="register" OnValidSubmit="RegisterUser">
+                <FluentValidationValidator Validator="validator" />
+                <MudTextField @bind-Value="register.Email" For="@(() => register.Email)" Label="Email" />
+                <MudTextField @bind-Value="register.UserName" For="@(() => register.UserName)" Label="User Name" />
+                <MudTextField @bind-Value="register.PhoneNumber" For="@(() => register.PhoneNumber)" Label="Phone Number" />
+                <MudTextField @bind-Value="register.Password" For="@(() => register.Password)" InputType="InputType.Password" Label="Password" />
+                <MudGrid Justify="Justify.Center" Class="mt-3">
+                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Class="w-50" Variant="Variant.Filled">Create account</MudButton>
+                </MudGrid>
+            </EditForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
 @code {
+    [Parameter]
+    public RegistrationRequestDto register { get; set; } = new();
+    public RegistrationRequestDtoValidator validator { get; set; } = new();
 
+    private async Task RegisterUser()
+    {
+        var result = await authService.Register(register);
+
+        if (result.IsSucceeded)
+        {
+            ToastService.ShowSuccess(result.Message);
+            navManager.NavigateTo("/");
+        }
+        else
+        {
+            ToastService.ShowError(result.Message);
+        }
+    }
 }

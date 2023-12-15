@@ -1,31 +1,31 @@
-﻿using OfficeManagerBlazorServer.Services.Interfaces;
+﻿using Blazored.SessionStorage;
+using OfficeManagerBlazorServer.Services.Interfaces;
 
 namespace OfficeManagerBlazorServer.Services
 {
     public class TokenProvider : ITokenProvider
     {
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ISessionStorageService sessionStorageService;
 
-        public TokenProvider(IHttpContextAccessor httpContextAccessor)
+        public TokenProvider(ISessionStorageService sessionStorageService)
         {
-            this.httpContextAccessor = httpContextAccessor;
+            this.sessionStorageService = sessionStorageService;
         }
 
-        public void CleanToken()
+        public async ValueTask CleanTokenAsync()
         {
-            httpContextAccessor.HttpContext?.Response.Cookies.Delete("JWT-Token");
+            await sessionStorageService.ClearAsync();
         }
 
-        public string? GetToken()
+        public async ValueTask<string> GetToken()
         {
-            string? token;
-            var isValid = httpContextAccessor.HttpContext.Request.Cookies.TryGetValue("JWT-Token", out token);
-            return isValid ? token : null;
+            string? token = await sessionStorageService.GetItemAsStringAsync("JWT-Token");
+            return string.IsNullOrEmpty(token)? null : token;
         }
 
-        public void SetToken(string token)
+        public async ValueTask SetToken(string token)
         {
-            httpContextAccessor.HttpContext?.Response.Cookies.Append("JWT-Token", token);
+            await sessionStorageService.SetItemAsStringAsync("JWT-Token", token);
         }
     }
 }
