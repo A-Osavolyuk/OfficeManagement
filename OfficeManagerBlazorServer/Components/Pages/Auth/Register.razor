@@ -14,7 +14,7 @@
     <MudItem xs="4">
         <MudPaper Outlined Class="pa-5">
             <MudText Align="Align.Center" Typo="Typo.h4">Register</MudText>
-            <EditForm Model="register" OnValidSubmit="RegisterUser">
+            <EditForm Model="register" OnValidSubmit="RegisterUser" FormName="register">
                 <FluentValidationValidator Validator="validator" />
                 <MudTextField @bind-Value="register.Email" For="@(() => register.Email)" Label="Email" />
                 <MudTextField @bind-Value="register.UserName" For="@(() => register.UserName)" Label="User Name" />

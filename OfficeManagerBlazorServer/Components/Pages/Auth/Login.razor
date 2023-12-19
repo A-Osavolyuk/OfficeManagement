@@ -14,7 +14,7 @@
     <MudItem xs="4">
         <MudPaper Outlined Class="pa-5">
             <MudText Align="Align.Center" Typo="Typo.h4">Login</MudText>
-            <EditForm Model="login" OnValidSubmit="LoginUser">
+            <EditForm Model="login" OnValidSubmit="LoginUser" FormName="login">
                 <MudTextField @bind-Value="login.Email" For="@(() => login.Email)" Label="User Name" />
                 <MudTextField @bind-Value="login.Password" For="@(() => login.Password)" InputType="InputType.Password" Label="Password" />
                 <MudGrid Justify="Justify.Center" Class="mt-3">
@@ -37,6 +37,7 @@
         if (result.IsSucceeded)
         {
             ((JwtAuthStateProvider)authenticationStateProvider).MarkUserAsAssigned(loginResponse.Token);
+            await TokenProvider.SetToken(loginResponse.Token);
             ToastService.ShowSuccess(result.Message);
             navManager.NavigateTo("/");
         }

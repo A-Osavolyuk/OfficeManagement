@@ -1,0 +1,33 @@
+﻿@page "/departments"
+
+@inject IDepartmentHttpService departmentHttpService
+@inject IToastService toastService
+
+<PageTitle>List of Departments</PageTitle>
+
+<MudTable Items="@Departments" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Department ID</MudTh>
+        <MudTh>Department Name</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.DepartmentId</MudTd>
+        <MudTd DataLabel="Sign">@context.DepartmentName</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private IEnumerable<Department> Departments { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await departmentHttpService.GetAll();
+
+        if (result.IsSucceeded)
+        {
+            Departments = JsonConvert.DeserializeObject<IEnumerable<Department>>(Convert.ToString(result.Result));
+        }
+        else
+            toastService.ShowError(result.Message);
+    }
+}
