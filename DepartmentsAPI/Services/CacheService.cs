@@ -7,14 +7,12 @@ namespace DepartmentsAPI.Services
     public class CacheService : ICacheService
     {
         private readonly IDatabase database;
-        private readonly IConfiguration configuration;
 
-        public CacheService(IConfiguration configuration)
+        public CacheService()
         {
             var redis = ConnectionMultiplexer.Connect("localhost:6379");
             database = redis.GetDatabase();
 
-            this.configuration = configuration;
         }
 
         public async ValueTask<T> GetAsync<T>(string key)
