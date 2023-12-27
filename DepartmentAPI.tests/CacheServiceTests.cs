@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace DepartmentAPI.tests
 {
     public class CacheServiceTests
@@ -18,7 +20,7 @@ namespace DepartmentAPI.tests
             await cacheService.RemoveAsync(key);
 
             //assert
-            Assert.True(isSucceeded);
+            isSucceeded.Should().BeTrue();
         }
 
         [Fact]
@@ -36,7 +38,7 @@ namespace DepartmentAPI.tests
             await cacheService.RemoveAsync(key);
 
             //assert
-            Assert.Equal(testData, resultData);
+            resultData.Should().Be(testData);
         }
 
         [Fact]
@@ -54,7 +56,7 @@ namespace DepartmentAPI.tests
             var resultData = await cacheService.GetAsync<string>(key);
 
             //assert
-            Assert.Equal(null, resultData);
+            resultData.Should().BeNull();
         }
     }
 }
