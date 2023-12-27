@@ -1,4 +1,4 @@
-namespace OfficeManagerMVC.Models
+namespace OfficeManagerMVC.Models.Errors
 {
     public class ErrorViewModel
     {
