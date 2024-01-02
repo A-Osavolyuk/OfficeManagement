@@ -9,10 +9,10 @@ namespace OfficeManagerMVC.Controllers
 {
     public class DepartmentsController : Controller
     {
-        private readonly IDepartmentHttpService departmentHttpService;
+        private readonly IDepartmentService departmentHttpService;
         private readonly IMapper mapper;
 
-        public DepartmentsController(IDepartmentHttpService departmentHttpService, IMapper mapper)
+        public DepartmentsController(IDepartmentService departmentHttpService, IMapper mapper)
         {
             this.departmentHttpService = departmentHttpService;
             this.mapper = mapper;

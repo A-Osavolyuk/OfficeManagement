@@ -8,12 +8,12 @@ using OfficeManagerMVC.Services.Interfaces;
 
 namespace OfficeManagerMVC.Services
 {
-    public class DepartmentHttpService : IDepartmentHttpService
+    public class DepartmentService : IDepartmentService
     {
-        private readonly IBaseHttpService httpService;
+        private readonly IBaseService httpService;
         private readonly HttpData httpData;
 
-        public DepartmentHttpService(IBaseHttpService httpService, IOptions<HttpData> httpData)
+        public DepartmentService(IBaseService httpService, IOptions<HttpData> httpData)
         {
             this.httpService = httpService;
             this.httpData = httpData.Value;

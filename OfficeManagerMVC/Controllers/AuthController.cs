@@ -12,11 +12,11 @@ namespace OfficeManagerMVC.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IAuthHttpService authHttpService;
+        private readonly IAuthService authHttpService;
         private readonly ITokenProvider tokenProvider;
 
         public AuthController(
-            IAuthHttpService authHttpService,
+            IAuthService authHttpService,
             ITokenProvider tokenProvider)
         {
             this.authHttpService = authHttpService;

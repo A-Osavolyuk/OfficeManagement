@@ -3,7 +3,7 @@ using OfficeManagerMVC.Models.DTOs;
 
 namespace OfficeManagerMVC.Services.Interfaces
 {
-    public interface IDepartmentHttpService
+    public interface IDepartmentService
     {
         public ValueTask<ResponseDto> GetAll();
         public ValueTask<ResponseDto> GetById(int id);

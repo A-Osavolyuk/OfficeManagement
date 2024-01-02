@@ -7,12 +7,12 @@ using System.Text;
 
 namespace OfficeManagerMVC.Services
 {
-    public class BaseHttpService : IBaseHttpService
+    public class BaseService : IBaseService
     {
         private readonly HttpClient httpClient;
         private readonly ITokenProvider tokenProvider;
 
-        public BaseHttpService(IHttpClientFactory clientFactory, ITokenProvider tokenProvider)
+        public BaseService(IHttpClientFactory clientFactory, ITokenProvider tokenProvider)
         {
             httpClient = clientFactory.CreateClient("OfficeManagerClient");
             this.tokenProvider = tokenProvider;

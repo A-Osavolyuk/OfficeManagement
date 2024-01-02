@@ -3,7 +3,7 @@ using OfficeManagerMVC.Models.DTOs;
 
 namespace OfficeManagerMVC.Services.Interfaces
 {
-    public interface IAuthHttpService
+    public interface IAuthService
     {
         ValueTask<ResponseDto> Register(RegistrationRequestDto registrationRequestDTO);
         ValueTask<ResponseDto> Login(LoginRequestDto loginRequestDTO);

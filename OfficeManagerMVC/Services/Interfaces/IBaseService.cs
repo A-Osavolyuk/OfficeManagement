@@ -2,7 +2,7 @@
 
 namespace OfficeManagerMVC.Services.Interfaces
 {
-    public interface IBaseHttpService
+    public interface IBaseService
     {
         Task<ResponseDto?> SendAsync(RequestDto request, bool withBearer = true);
     }

@@ -7,13 +7,13 @@ using OfficeManagerMVC.Services.Interfaces;
 
 namespace OfficeManagerMVC.Services
 {
-    public class AuthHttpService : IAuthHttpService
+    public class AuthService : IAuthService
     {
-        private readonly IBaseHttpService httpService;
+        private readonly IBaseService httpService;
         private readonly HttpData httpData;
 
-        public AuthHttpService(
-            IBaseHttpService httpService, 
+        public AuthService(
+            IBaseService httpService, 
             IOptions<HttpData> httpData)
         {
             this.httpService = httpService;
