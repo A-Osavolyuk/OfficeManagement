@@ -42,7 +42,7 @@ namespace EmployeesAPI.Controllers.v1
                 });
         }
 
-        [HttpGet("/GetEmployeesByPositionId/{Id:int}")]
+        [HttpGet("GetEmployeesByPositionId/{Id:int}")]
         public async ValueTask<ActionResult<IEnumerable<Employee>>> GetAllEmployeesByPositionId(int Id)
         {
             var result = await employeesService.GetAllByPositionId(Id);
