@@ -9,7 +9,6 @@ using OfficeManagerMVC.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidationClientsideAdapters();
 
@@ -18,12 +17,16 @@ builder.Services.Configure<HttpData>(builder.Configuration.GetSection("HttpData"
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IDepartmentService, DepartmentService>();
+builder.Services.AddHttpClient<IPositionsService, PositionsService>();
+builder.Services.AddHttpClient<IEmployeesService, EmployeesService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IValidator<DepartmentDto>, DepartmentValidator>();
 builder.Services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestDtoValidator>();
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IPositionsService, PositionsService>();
+builder.Services.AddScoped<IEmployeesService, EmployeesService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 
