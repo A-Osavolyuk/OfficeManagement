@@ -2,7 +2,6 @@ using AuthAPI.Data;
 using AuthAPI.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog.Sinks.Elasticsearch;
 using Serilog;
 using System.Reflection;
@@ -11,12 +10,10 @@ using AuthAPI.Models;
 using FluentValidation;
 using AuthAPI.Services.Interfaces;
 using AuthAPI.Services;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Mvc;
 using AuthAPI.HealthChecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using HealthChecks.UI.Core;
 using HealthChecks.UI.Client;
+using AuthAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,23 +26,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHealthChecks().AddCheck<DatabaseHealthChecks>("Database");
 
-builder.Services.AddApiVersioning(options =>
-{
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.ReportApiVersions = true;
-    options.ApiVersionReader = ApiVersionReader.Combine(
-        new HeaderApiVersionReader("x-version"),
-        new QueryStringApiVersionReader("api-version"),
-        new MediaTypeApiVersionReader("ver")
-    );
-});
-
-builder.Services.AddVersionedApiExplorer(options =>
-{
-    options.GroupNameFormat = "'v'VVV";
-    options.SubstituteApiVersionInUrl = true;
-});
+builder.Services.ConfigureVersioning();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JWT-Options"));
 

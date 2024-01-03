@@ -2,7 +2,6 @@ using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using Blazored.Toast;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -10,10 +9,9 @@ using MudBlazor.Services;
 using OfficeManagerBlazorServer;
 using OfficeManagerBlazorServer.Common;
 using OfficeManagerBlazorServer.Components;
-using OfficeManagerBlazorServer.Models.DTOs;
+using OfficeManagerBlazorServer.Extensions;
 using OfficeManagerBlazorServer.Services;
 using OfficeManagerBlazorServer.Services.Interfaces;
-using OfficeManagerBlazorServer.Validation;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,16 +31,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.Configure<HttpData>(builder.Configuration.GetSection("HttpData"));
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<IDepartmentHttpService, DepartmentHttpService>();
-builder.Services.AddHttpClient<IAuthHttpService, AuthHttpService>();
+builder.Services.ConfigureHttpClients();
+builder.Services.ConfigureDependencyInjection();
 
-builder.Services.AddScoped<IAuthHttpService, AuthHttpService>();
-builder.Services.AddScoped<IBaseHttpService, BaseHttpService>();
-builder.Services.AddScoped<IDepartmentHttpService, DepartmentHttpService>();
-builder.Services.AddScoped<ITokenProvider, TokenProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthStateProvider>();
+builder.Services.AddHttpContextAccessor();
 
 var jwtOptions = builder.Configuration.GetSection("JWT-Options");
 
