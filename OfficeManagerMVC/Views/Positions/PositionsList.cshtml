@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Position>
+
+@{
+    ViewData["Title"] = "List of Positions";
+}
+
+<h1>List of Positions</h1>
+
+<p>
+    <a asp-controller="Positions" asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Position ID
+            </th>
+            <th>
+                Position Name
+            </th>
+            <th>
+                Department ID
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.PositionId)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.PositionName)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.DepartmentId)
+                    </div>
+                </td>
+                <td>
+                    <div class="text-end">
+                        <a class="btn btn-info w-25" asp-action="details" asp-controller="positions" asp-route-id="@item.DepartmentId">Details</a>
+                        <a class="btn btn-primary w-25" asp-action="update" asp-controller="positions" asp-route-id="@item.DepartmentId">Edit</a>
+                        <a class="btn btn-danger w-25" asp-action="delete" asp-controller="positions" asp-route-id="@item.DepartmentId">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

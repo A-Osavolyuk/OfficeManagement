@@ -3,15 +3,11 @@ using Blazored.SessionStorage;
 using Blazored.Toast;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using MudBlazor.Services;
-using OfficeManagerBlazorServer;
 using OfficeManagerBlazorServer.Common;
 using OfficeManagerBlazorServer.Components;
 using OfficeManagerBlazorServer.Extensions;
-using OfficeManagerBlazorServer.Services;
-using OfficeManagerBlazorServer.Services.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,33 +32,7 @@ builder.Services.ConfigureDependencyInjection();
 
 builder.Services.AddHttpContextAccessor();
 
-var jwtOptions = builder.Configuration.GetSection("JWT-Options");
-
-var secret = jwtOptions.GetValue<string>("Secret");
-var issuer = jwtOptions.GetValue<string>("Issuer");
-var audience = jwtOptions.GetValue<string>("Audience");
-
-var key = Encoding.ASCII.GetBytes(secret);
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.SaveToken = true;
-    options.RequireHttpsMetadata = false;
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidIssuer = issuer,
-        ValidateAudience = true,
-        ValidAudience = audience,
-    };
-});
+builder.Services.ConfigureSecurity(builder.Configuration);
 
 var app = builder.Build();
 
