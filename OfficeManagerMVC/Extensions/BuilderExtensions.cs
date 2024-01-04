@@ -20,6 +20,7 @@ namespace OfficeManagerMVC.Extensions
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<IValidator<DepartmentDto>, DepartmentValidator>();
+            services.AddScoped<IValidator<PositionDto>, PositionValidator>();
             services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestDtoValidator>();
             services.AddScoped<IBaseService, BaseService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
