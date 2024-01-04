@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using OfficeManagerMVC.Models.DTOs;
+using OfficeManagerMVC.Models.ViewModels;
 using OfficeManagerMVC.Services;
 using OfficeManagerMVC.Services.Interfaces;
 using OfficeManagerMVC.Validation;
@@ -20,7 +21,7 @@ namespace OfficeManagerMVC.Extensions
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<IValidator<DepartmentDto>, DepartmentValidator>();
-            services.AddScoped<IValidator<PositionDto>, PositionValidator>();
+            services.AddScoped<IValidator<CreatePositionViewModel>, PositionValidator>();
             services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestDtoValidator>();
             services.AddScoped<IBaseService, BaseService>();
             services.AddScoped<IDepartmentService, DepartmentService>();

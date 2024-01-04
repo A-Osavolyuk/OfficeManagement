@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using OfficeManagerMVC.Models.DTOs;
+using OfficeManagerMVC.Models.ViewModels;
 
 namespace OfficeManagerMVC.Validation
 {
-    public class PositionValidator : AbstractValidator<PositionDto>
+    public class PositionValidator : AbstractValidator<CreatePositionViewModel>
     {
         public PositionValidator()
         {

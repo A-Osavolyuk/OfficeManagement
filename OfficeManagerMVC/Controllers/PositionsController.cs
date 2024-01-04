@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using OfficeManagerMVC.Models.DTOs;
 using OfficeManagerMVC.Models.Entities;
+using OfficeManagerMVC.Models.ViewModels;
 using OfficeManagerMVC.Services.Interfaces;
 
 namespace OfficeManagerMVC.Controllers
@@ -58,6 +60,49 @@ namespace OfficeManagerMVC.Controllers
             }
 
             return View(new List<Position>());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var result = await departmentService.GetAll();
+
+            if (result.IsSucceeded)
+            {
+                var departments = JsonConvert.DeserializeObject<IEnumerable<Department>>(result.Result.ToString());
+
+                return View(new CreatePositionViewModel() { Departments = departments.ToList() });
+            }
+            else
+            {
+                TempData["error"] = result.Message;
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreatePositionViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var position = mapper.Map<PositionDto>(viewModel);
+                var result = await positionsService.Create(position);
+
+                if (result.IsSucceeded)
+                {
+                    TempData["success"] = $"Position was successful created.";
+                    return RedirectToAction("positionsList", "positions");
+                }
+                else
+                {
+                    TempData["error"] = result.Message;
+                }
+
+                ModelState.AddModelError("", result.Message);
+            }
+
+            return View();
         }
     }
 }
