@@ -1,0 +1,55 @@
+﻿@model UpdatePositionViewModel
+
+@{
+    ViewData["Title"] = "Create Position";
+}
+
+<h1>Create Position</h1>
+<hr />
+
+<div class="row">
+    <div class="m-auto col-sm-4">
+        <div class="card">
+            <form asp-action="Create">
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="PositionId" hidden />
+
+                    <div class="form-group">
+                        <label asp-for="PositionId" class="control-label"></label>
+                        <input asp-for="PositionId" disabled class="form-control" />
+                        <span asp-validation-for="PositionId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PositionName" class="control-label"></label>
+                        <input asp-for="PositionName" class="form-control" />
+                        <span asp-validation-for="PositionName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DepartmentId" class="control-label"></label>
+                        <select asp-for="DepartmentId">
+
+                            @foreach (var item in Model.Departments)
+                            {
+                                <option value="@item.DepartmentId"> @item.DepartmentName </option>
+                            }
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                    </div>
+
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    <a asp-action="positionsList" asp-controller="positions" class="btn btn-primary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

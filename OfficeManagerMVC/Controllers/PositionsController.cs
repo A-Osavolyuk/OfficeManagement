@@ -104,5 +104,70 @@ namespace OfficeManagerMVC.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await positionsService.DeleteById(id);
+
+            if (result.IsSucceeded)
+            {
+                TempData["success"] = $"Position was successful deleted";
+                return RedirectToAction("positionsList", "positions");
+            }
+            else
+            {
+                TempData["error"] = result.Message;
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var positionsResult = await positionsService.GetById(id);
+            var departmentsResult = await departmentService.GetAll();
+
+            if (positionsResult.IsSucceeded && positionsResult.IsSucceeded)
+            {
+                var position = JsonConvert.DeserializeObject<Position>(positionsResult.Result.ToString());
+                var departmentsList = JsonConvert.DeserializeObject<IEnumerable<Department>>(departmentsResult.Result.ToString());
+                var result = mapper.Map<UpdatePositionViewModel>(position);
+                result.Departments = departmentsList.ToList();
+
+                return View(result);
+            }
+            else
+            {
+                TempData["error"] = positionsResult.Message;
+                TempData["error"] = departmentsResult.Message;
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async ValueTask<IActionResult> Update(UpdatePositionViewModel position)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await positionsService.Update(mapper.Map<PositionDto>(position), position.PositionId);
+
+                if (result.IsSucceeded)
+                {
+                    TempData["success"] = $"Positions was successful updated.";
+                    return RedirectToAction("positionsList", "positions");
+                }
+                else
+                {
+                    TempData["error"] = result.Message;
+                }
+
+                ModelState.AddModelError("", result.Message);
+            }
+
+            return View();
+        }
     }
 }
