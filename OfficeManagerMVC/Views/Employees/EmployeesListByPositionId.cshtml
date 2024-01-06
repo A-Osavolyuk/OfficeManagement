@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Employee>
+
+@{
+    ViewData["Title"] = "List of Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List of Employees</h1>
+
+<p>
+    <a asp-controller="Employees" asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Employee ID
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Position ID
+            </th>
+            <th class="text-end">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.PositionId)
+                    </div>
+                </td>
+                <td>
+                    <div class="text-end">
+                        <a class="btn btn-info w-25" asp-action="details" asp-controller="employees" asp-route-id="@item.EmployeeId">Details</a>
+                        <a class="btn btn-primary w-25" asp-action="update" asp-controller="employees" asp-route-id="@item.EmployeeId">Edit</a>
+                        <a class="btn btn-danger w-25" asp-action="delete" asp-controller="employees" asp-route-id="@item.EmployeeId">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

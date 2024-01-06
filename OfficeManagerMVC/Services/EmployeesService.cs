@@ -24,7 +24,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.POST,
-                Url = httpData.PositionsAPI + "/api/v1/Employees",
+                Url = httpData.EmployeesAPI + "/api/v1/Employees",
                 Data = employeeDto,
             });
         }
@@ -34,7 +34,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.DELETE,
-                Url = httpData.PositionsAPI + $"/api/v1/Employees/{id}",
+                Url = httpData.EmployeesAPI + $"/api/v1/Employees/{id}",
             });
         }
 
@@ -43,7 +43,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.GET,
-                Url = httpData.PositionsAPI + "/api/v1/Employees",
+                Url = httpData.EmployeesAPI + "/api/v1/Employees",
             });
         }
 
@@ -52,7 +52,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.GET,
-                Url = httpData.PositionsAPI + $"/api/v1/Employees/GetEmployeesByPositionId/{positionId}",
+                Url = httpData.EmployeesAPI + $"/api/v1/Employees/GetEmployeesByPositionId/{positionId}",
             });
         }
 
@@ -61,7 +61,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.GET,
-                Url = httpData.PositionsAPI + $"/api/v1/Employees/{email}",
+                Url = httpData.EmployeesAPI + $"/api/v1/Employees/{email}",
             });
         }
 
@@ -70,7 +70,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.GET,
-                Url = httpData.PositionsAPI + $"/api/v1/Employees/{id}",
+                Url = httpData.EmployeesAPI + $"/api/v1/Employees/{id}",
             });
         }
 
@@ -79,7 +79,7 @@ namespace OfficeManagerMVC.Services
             return await httpService.SendAsync(new RequestDto()
             {
                 Method = ApiMethod.PUT,
-                Url = httpData.PositionsAPI + $"/api/v1/Employees/{id}",
+                Url = httpData.EmployeesAPI + $"/api/v1/Employees/{id}",
                 Data = employeeDto,
             });
         }

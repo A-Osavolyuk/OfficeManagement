@@ -3,7 +3,7 @@
     ViewData["Title"] = "List of Positions";
 }
 
-<h1>List of Positions with Department ID: @Model.First().DepartmentId</h1>
+<h1>List of Positions</h1>
 
 <p>
     <a asp-controller="Positions" asp-action="Create" class="btn btn-success">Create New</a>
@@ -16,6 +16,9 @@
             </th>
             <th>
                 Position Name
+            </th>
+            <th>
+                Department ID
             </th>
             <th class="text-end">
                 Actions
@@ -34,6 +37,11 @@
                 <td>
                     <div class="mt-2">
                         @Html.DisplayFor(modelItem => item.PositionName)
+                    </div>
+                </td>
+                <td>
+                    <div class="mt-2">
+                        @Html.DisplayFor(modelItem => item.DepartmentId)
                     </div>
                 </td>
                 <td>
